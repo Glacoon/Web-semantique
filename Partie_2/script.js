@@ -1,5 +1,5 @@
 // Configuration du endpoint SPARQL
-const endpoint = "http://localhost:3030/stream-data/query";
+const endpoint = "http://localhost:3030/streamdata/query";
 
 // Préfixes pour les requêtes SPARQL
 const prefixes = `
