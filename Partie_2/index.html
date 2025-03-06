@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamData - Explorateur de Films</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>StreamData - Explorateur de Films et Séries</h1>
+            <p>Explorez notre base de connaissances RDF/OWL</p>
+        </header>
+
+        <div class="query-section">
+            <h2>Requêtes prédéfinies</h2>
+            <select id="query-selector">
+                <option value="films-acteurs">Films et leurs acteurs</option>
+                <option value="acteurs-celebres">Acteurs célèbres</option>
+                <option value="genres-par-plateforme">Genres par plateforme</option>
+                <option value="films-par-genre">Films par genre</option>
+                <option value="acteurs-par-film">Acteurs par film spécifique</option>
+                <option value="films-par-annee">Films par année</option>
+            </select>
+            <input type="text" id="query-param" placeholder="Paramètre (si nécessaire)" style="display: none;">
+            <button id="execute-query">Exécuter la requête</button>
+            <div class="loader" id="loader"></div>
+            <div class="error" id="error-message"></div>
+        </div>
+
+        <div class="results-section">
+            <h2>Résultats</h2>
+            <table id="results-table">
+                <thead>
+                    <tr id="table-header"></tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

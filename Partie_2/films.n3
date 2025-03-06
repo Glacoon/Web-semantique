@@ -1,0 +1,190 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sd: <http://streamdata.org/ontology#> .
+
+# Définition des classes
+sd:Film rdf:type rdfs:Class ;
+    rdfs:label "Film" ;
+    rdfs:comment "Représente un film" .
+
+sd:Serie rdf:type rdfs:Class ;
+    rdfs:label "Série" ;
+    rdfs:comment "Représente une série TV" .
+
+sd:Acteur rdf:type rdfs:Class ;
+    rdfs:label "Acteur" ;
+    rdfs:comment "Représente un acteur ou une actrice" .
+
+sd:Realisateur rdf:type rdfs:Class ;
+    rdfs:label "Réalisateur" ;
+    rdfs:comment "Représente un réalisateur ou une réalisatrice" .
+
+sd:Genre rdf:type rdfs:Class ;
+    rdfs:label "Genre" ;
+    rdfs:comment "Représente un genre cinématographique" .
+
+sd:Plateforme rdf:type rdfs:Class ;
+    rdfs:label "Plateforme" ;
+    rdfs:comment "Représente une plateforme de streaming" .
+
+# Définition des propriétés
+sd:a_pour_acteur rdf:type rdf:Property ;
+    rdfs:label "A pour acteur" ;
+    rdfs:comment "Lie un film ou une série à un acteur" ;
+    rdfs:domain sd:Film, sd:Serie ;
+    rdfs:range sd:Acteur .
+
+sd:a_pour_realisateur rdf:type rdf:Property ;
+    rdfs:label "A pour réalisateur" ;
+    rdfs:comment "Lie un film ou une série à un réalisateur" ;
+    rdfs:domain sd:Film, sd:Serie ;
+    rdfs:range sd:Realisateur .
+
+sd:a_pour_genre rdf:type rdf:Property ;
+    rdfs:label "A pour genre" ;
+    rdfs:comment "Lie un film ou une série à un genre" ;
+    rdfs:domain sd:Film, sd:Serie ;
+    rdfs:range sd:Genre .
+
+sd:diffuse_sur rdf:type rdf:Property ;
+    rdfs:label "Diffusé sur" ;
+    rdfs:comment "Lie un film ou une série à une plateforme de streaming" ;
+    rdfs:domain sd:Film, sd:Serie ;
+    rdfs:range sd:Plateforme .
+
+sd:annee_sortie rdf:type rdf:Property ;
+    rdfs:label "Année de sortie" ;
+    rdfs:comment "Indique l'année de sortie d'un film ou d'une série" ;
+    rdfs:domain sd:Film, sd:Serie ;
+    rdfs:range xsd:integer .
+
+# Instances des classes
+
+# Films
+sd:Inception rdf:type sd:Film ;
+    rdfs:label "Inception" ;
+    sd:a_pour_realisateur sd:Christopher_Nolan ;
+    sd:a_pour_acteur sd:Leonardo_DiCaprio ;
+    sd:a_pour_acteur sd:Ellen_Page ;
+    sd:a_pour_genre sd:ScienceFiction ;
+    sd:a_pour_genre sd:Action ;
+    sd:diffuse_sur sd:Netflix ;
+    sd:annee_sortie "2010"^^xsd:integer .
+
+sd:Interstellar rdf:type sd:Film ;
+    rdfs:label "Interstellar" ;
+    sd:a_pour_realisateur sd:Christopher_Nolan ;
+    sd:a_pour_acteur sd:Matthew_McConaughey ;
+    sd:a_pour_acteur sd:Anne_Hathaway ;
+    sd:a_pour_genre sd:ScienceFiction ;
+    sd:a_pour_genre sd:Drame ;
+    sd:diffuse_sur sd:AmazonPrime ;
+    sd:annee_sortie "2014"^^xsd:integer .
+
+sd:Titanic rdf:type sd:Film ;
+    rdfs:label "Titanic" ;
+    sd:a_pour_realisateur sd:James_Cameron ;
+    sd:a_pour_acteur sd:Leonardo_DiCaprio ;
+    sd:a_pour_acteur sd:Kate_Winslet ;
+    sd:a_pour_genre sd:Romance ;
+    sd:a_pour_genre sd:Drame ;
+    sd:diffuse_sur sd:Disney ;
+    sd:annee_sortie "1997"^^xsd:integer .
+
+# Séries
+sd:Stranger_Things rdf:type sd:Serie ;
+    rdfs:label "Stranger Things" ;
+    sd:a_pour_realisateur sd:Duffer_Brothers ;
+    sd:a_pour_acteur sd:Millie_Bobby_Brown ;
+    sd:a_pour_acteur sd:Finn_Wolfhard ;
+    sd:a_pour_genre sd:ScienceFiction ;
+    sd:a_pour_genre sd:Horreur ;
+    sd:diffuse_sur sd:Netflix ;
+    sd:annee_sortie "2016"^^xsd:integer .
+
+sd:The_Crown rdf:type sd:Serie ;
+    rdfs:label "The Crown" ;
+    sd:a_pour_realisateur sd:Peter_Morgan ;
+    sd:a_pour_acteur sd:Olivia_Colman ;
+    sd:a_pour_acteur sd:Helena_Bonham_Carter ;
+    sd:a_pour_genre sd:Historique ;
+    sd:a_pour_genre sd:Drame ;
+    sd:diffuse_sur sd:Netflix ;
+    sd:annee_sortie "2016"^^xsd:integer .
+
+# Acteurs
+sd:Leonardo_DiCaprio rdf:type sd:Acteur ;
+    rdfs:label "Leonardo DiCaprio" .
+
+sd:Ellen_Page rdf:type sd:Acteur ;
+    rdfs:label "Elliot Page" .
+
+sd:Matthew_McConaughey rdf:type sd:Acteur ;
+    rdfs:label "Matthew McConaughey" .
+
+sd:Anne_Hathaway rdf:type sd:Acteur ;
+    rdfs:label "Anne Hathaway" .
+
+sd:Kate_Winslet rdf:type sd:Acteur ;
+    rdfs:label "Kate Winslet" .
+
+sd:Millie_Bobby_Brown rdf:type sd:Acteur ;
+    rdfs:label "Millie Bobby Brown" .
+
+sd:Finn_Wolfhard rdf:type sd:Acteur ;
+    rdfs:label "Finn Wolfhard" .
+
+sd:Olivia_Colman rdf:type sd:Acteur ;
+    rdfs:label "Olivia Colman" .
+
+sd:Helena_Bonham_Carter rdf:type sd:Acteur ;
+    rdfs:label "Helena Bonham Carter" .
+
+# Réalisateurs
+sd:Christopher_Nolan rdf:type sd:Realisateur ;
+    rdfs:label "Christopher Nolan" .
+
+sd:James_Cameron rdf:type sd:Realisateur ;
+    rdfs:label "James Cameron" .
+
+sd:Duffer_Brothers rdf:type sd:Realisateur ;
+    rdfs:label "The Duffer Brothers" .
+
+sd:Peter_Morgan rdf:type sd:Realisateur ;
+    rdfs:label "Peter Morgan" .
+
+# Genres
+sd:Action rdf:type sd:Genre ;
+    rdfs:label "Action" .
+
+sd:ScienceFiction rdf:type sd:Genre ;
+    rdfs:label "Science Fiction" .
+
+sd:Romance rdf:type sd:Genre ;
+    rdfs:label "Romance" .
+
+sd:Drame rdf:type sd:Genre ;
+    rdfs:label "Drame" .
+
+sd:Comedie rdf:type sd:Genre ;
+    rdfs:label "Comédie" .
+
+sd:Horreur rdf:type sd:Genre ;
+    rdfs:label "Horreur" .
+
+sd:Historique rdf:type sd:Genre ;
+    rdfs:label "Historique" .
+
+# Plateformes
+sd:Netflix rdf:type sd:Plateforme ;
+    rdfs:label "Netflix" .
+
+sd:AmazonPrime rdf:type sd:Plateforme ;
+    rdfs:label "Amazon Prime Video" .
+
+sd:Disney rdf:type sd:Plateforme ;
+    rdfs:label "Disney+" .
+
+sd:AppleTV rdf:type sd:Plateforme ;
+    rdfs:label "Apple TV+" .

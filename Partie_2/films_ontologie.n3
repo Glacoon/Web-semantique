@@ -1,0 +1,198 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sd: <http://streamdata.org/ontology#> .
+
+# Déclaration de l'ontologie
+<http://streamdata.org/ontology> rdf:type owl:Ontology ;
+    rdfs:label "Ontologie StreamData pour les films et séries" ;
+    rdfs:comment "Ontologie pour la modélisation des films, séries, acteurs, genres et plateformes" .
+
+# Définition des classes OWL
+sd:Film rdf:type owl:Class ;
+    rdfs:label "Film" ;
+    rdfs:comment "Représente un film" .
+
+sd:Serie rdf:type owl:Class ;
+    rdfs:label "Série" ;
+    rdfs:comment "Représente une série TV" .
+
+sd:Acteur rdf:type owl:Class ;
+    rdfs:label "Acteur" ;
+    rdfs:comment "Représente un acteur ou une actrice" .
+
+sd:ActeurCelebre rdf:type owl:Class ;
+    rdfs:label "Acteur Célèbre" ;
+    rdfs:comment "Représente un acteur ou une actrice célèbre" ;
+    rdfs:subClassOf sd:Acteur .
+
+sd:Realisateur rdf:type owl:Class ;
+    rdfs:label "Réalisateur" ;
+    rdfs:comment "Représente un réalisateur ou une réalisatrice" .
+
+sd:Genre rdf:type owl:Class ;
+    rdfs:label "Genre" ;
+    rdfs:comment "Représente un genre cinématographique" .
+
+sd:Plateforme rdf:type owl:Class ;
+    rdfs:label "Plateforme" ;
+    rdfs:comment "Représente une plateforme de streaming" .
+
+# Définition des sous-genres
+sd:Comedie rdf:type owl:Class ;
+    rdfs:label "Comédie" ;
+    rdfs:subClassOf sd:Genre .
+
+sd:HumoirNoir rdf:type owl:Class ;
+    rdfs:label "Humour Noir" ;
+    rdfs:subClassOf sd:Comedie .
+
+sd:ComedieMusicale rdf:type owl:Class ;
+    rdfs:label "Comédie Musicale" ;
+    rdfs:subClassOf sd:Comedie .
+
+sd:ScienceFiction rdf:type owl:Class ;
+    rdfs:label "Science Fiction" ;
+    rdfs:subClassOf sd:Genre .
+
+sd:Cyberpunk rdf:type owl:Class ;
+    rdfs:label "Cyberpunk" ;
+    rdfs:subClassOf sd:ScienceFiction .
+
+sd:SpaceOpera rdf:type owl:Class ;
+    rdfs:label "Space Opera" ;
+    rdfs:subClassOf sd:ScienceFiction .
+
+sd:Drame rdf:type owl:Class ;
+    rdfs:label "Drame" ;
+    rdfs:subClassOf sd:Genre .
+
+sd:DrameHistorique rdf:type owl:Class ;
+    rdfs:label "Drame Historique" ;
+    rdfs:subClassOf sd:Drame .
+
+sd:DramePsychologique rdf:type owl:Class ;
+    rdfs:label "Drame Psychologique" ;
+    rdfs:subClassOf sd:Drame .
+
+sd:Action rdf:type owl:Class ;
+    rdfs:label "Action" ;
+    rdfs:subClassOf sd:Genre .
+
+sd:ArtsMartiaux rdf:type owl:Class ;
+    rdfs:label "Arts Martiaux" ;
+    rdfs:subClassOf sd:Action .
+
+sd:Thriller rdf:type owl:Class ;
+    rdfs:label "Thriller" ;
+    rdfs:subClassOf sd:Genre .
+
+# Définition des propriétés OWL
+sd:a_pour_acteur rdf:type owl:ObjectProperty ;
+    rdfs:label "A pour acteur" ;
+    rdfs:comment "Lie un film ou une série à un acteur" ;
+    rdfs:domain [
+        rdf:type owl:Class ;
+        owl:unionOf (sd:Film sd:Serie)
+    ] ;
+    rdfs:range sd:Acteur .
+
+sd:a_pour_realisateur rdf:type owl:ObjectProperty ;
+    rdfs:label "A pour réalisateur" ;
+    rdfs:comment "Lie un film ou une série à un réalisateur" ;
+    rdfs:domain [
+        rdf:type owl:Class ;
+        owl:unionOf (sd:Film sd:Serie)
+    ] ;
+    rdfs:range sd:Realisateur .
+
+sd:a_pour_genre rdf:type owl:ObjectProperty ;
+    rdfs:label "A pour genre" ;
+    rdfs:comment "Lie un film ou une série à un genre" ;
+    rdfs:domain [
+        rdf:type owl:Class ;
+        owl:unionOf (sd:Film sd:Serie)
+    ] ;
+    rdfs:range sd:Genre .
+
+sd:diffuse_sur rdf:type owl:ObjectProperty ;
+    rdfs:label "Diffusé sur" ;
+    rdfs:comment "Lie un film ou une série à une plateforme de streaming" ;
+    rdfs:domain [
+        rdf:type owl:Class ;
+        owl:unionOf (sd:Film sd:Serie)
+    ] ;
+    rdfs:range sd:Plateforme .
+
+sd:nombre_films rdf:type owl:DatatypeProperty ;
+    rdfs:label "Nombre de films" ;
+    rdfs:comment "Indique le nombre de films dans lesquels l'acteur a joué" ;
+    rdfs:domain sd:Acteur ;
+    rdfs:range xsd:integer .
+
+# Règle OWL : Un film doit appartenir à au moins un genre
+sd:Film rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty sd:a_pour_genre ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+sd:Serie rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty sd:a_pour_genre ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+# Règle OWL : Un acteur est célèbre s'il joue dans au moins 3 films
+sd:ActeurCelebre owl:equivalentClass [
+    rdf:type owl:Restriction ;
+    owl:onProperty [
+        owl:inverseOf sd:a_pour_acteur
+    ] ;
+    owl:minCardinality "3"^^xsd:nonNegativeInteger
+] .
+
+# Règle supplémentaire : relation entre plateforme et genre
+sd:propose_genre rdf:type owl:ObjectProperty ;
+    rdfs:label "Propose le genre" ;
+    rdfs:comment "Indique qu'une plateforme propose des contenus d'un certain genre" ;
+    rdfs:domain sd:Plateforme ;
+    rdfs:range sd:Genre .
+
+# Règle d'inférence : Si une plateforme diffuse un film d'un certain genre, alors elle propose ce genre
+sd:propose_genre owl:propertyChainAxiom (
+    [owl:inverseOf sd:diffuse_sur]
+    sd:a_pour_genre
+) .
+
+# Exemple d'application des nouvelles règles OWL aux données existantes
+sd:Inception sd:a_pour_genre sd:Cyberpunk .
+sd:Stranger_Things sd:a_pour_genre sd:DramePsychologique .
+
+# Création d'un nouveau film avec sous-genre
+sd:Parasite rdf:type sd:Film ;
+    rdfs:label "Parasite" ;
+    sd:a_pour_realisateur sd:Bong_Joon_Ho ;
+    sd:a_pour_acteur sd:Song_Kang_Ho ;
+    sd:a_pour_genre sd:HumoirNoir ;
+    sd:diffuse_sur sd:Netflix ;
+    sd:annee_sortie "2019"^^xsd:integer .
+
+sd:Bong_Joon_Ho rdf:type sd:Realisateur ;
+    rdfs:label "Bong Joon-ho" .
+
+sd:Song_Kang_Ho rdf:type sd:Acteur ;
+    rdfs:label "Song Kang-ho" .
+
+# Leonardo DiCaprio est dans 3 films, il devrait être inféré comme un ActeurCelebre
+sd:Revenant rdf:type sd:Film ;
+    rdfs:label "The Revenant" ;
+    sd:a_pour_realisateur sd:Alejandro_Gonzalez_Inarritu ;
+    sd:a_pour_acteur sd:Leonardo_DiCaprio ;
+    sd:a_pour_genre sd:Drame ;
+    sd:diffuse_sur sd:Disney ;
+    sd:annee_sortie "2015"^^xsd:integer .
+
+sd:Alejandro_Gonzalez_Inarritu rdf:type sd:Realisateur ;
+    rdfs:label "Alejandro González Iñárritu" .

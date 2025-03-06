@@ -1,22 +1,66 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recherche DBPedia</title>
     <script defer src="script.js"></script>
-</head>
-<body>
-    <h1>Recherche d’informations sur DBPedia</h1>
-    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Recherche d'informations sur DBPedia</h1>
+
     <h2>Films par réalisateur</h2>
-    <input type="text" id="realisateur" placeholder="Nom du réalisateur (ex: Steven_Spielberg)">
+    <input
+      type="text"
+      id="realisateur"
+      placeholder="Nom du réalisateur (ex: Steven_Spielberg)"
+    />
     <button onclick="searchFilmsByDirector()">Rechercher</button>
     <ul id="films"></ul>
 
     <h2>Informations sur un acteur</h2>
-    <input type="text" id="acteur" placeholder="Nom de l’acteur (ex: Leonardo_DiCaprio)">
+    <input
+      type="text"
+      id="acteur"
+      placeholder="Nom de l'acteur (ex: Leonardo_DiCaprio)"
+    />
     <button onclick="searchActorInfo()">Rechercher</button>
     <ul id="actor-info"></ul>
-</body>
+
+    <h2>Acteurs des films de Tarantino</h2>
+    <button onclick="searchTarantinoActors()">Afficher les acteurs</button>
+    <ul id="tarantino-actors"></ul>
+
+    <h2>Présidents français</h2>
+    <button onclick="searchFrenchPresidents()">Rechercher</button>
+    <ul id="french-presidents"></ul>
+
+    <h2>Vérifier une information avec ASK</h2>
+    <div class="input-group">
+      <input
+        type="text"
+        id="askQueryInput"
+        placeholder="Entrez une ressource (ex: dbr:Paris)"
+      />
+      <select id="entityType">
+        <option value="City">Ville</option>
+        <option value="Company">Entreprise</option>
+        <option value="Person">Personne</option>
+        <option value="Film">Film</option>
+        <option value="Country">Pays</option>
+      </select>
+    </div>
+    <button onclick="executeAskQuery()">Vérifier</button>
+    <div id="askResult"></div>
+
+    <h2>Obtenir des informations détaillées avec DESCRIBE</h2>
+    <input
+      type="text"
+      id="describeQueryInput"
+      placeholder="Entrez une ressource (ex: dbr:Albert_Einstein)"
+    />
+    <button onclick="executeDescribeQuery()">Obtenir</button>
+    <ul id="describeResults"></ul>
+  </body>
 </html>
